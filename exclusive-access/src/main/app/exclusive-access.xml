@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:apache-ignite="http://www.mulesoft.org/schema/mule/apache-ignite" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apache-ignite http://www.mulesoft.org/schema/mule/apache-ignite/current/mule-apache-ignite.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="HttpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <apache-ignite:connection-manager name="ignite" igniteInstanceName="grid1" igniteSpringCfgFile="ignite.xml" doc:name="Apache Ignite: Ignite Connection Manager">
+        <apache-ignite:lock-defs>
+            <apache-ignite:lock-def lockName="lock"/>
+        </apache-ignite:lock-defs>
+    </apache-ignite:connection-manager>
+    <apache-ignite:config name="ApacheIgniteConfig" manager-ref="ignite" doc:name="Apache Ignite: Configuration"/>
+    <flow name="exclusiveAccessFlow">
+        <http:listener config-ref="HttpListenerConfig" path="/" doc:name="HTTP">
+            <http:response-builder>
+                <http:header headerName="Content-Type" value="application/json"/>
+            </http:response-builder>
+        </http:listener>
+        <apache-ignite:lock-scope lock="lock" manager-ref="ignite" timeout="5" doc:name="Lock - Scope">
+            <expression-component doc:name="expr: Wait 10 seconds"><![CDATA[java.lang.Thread.currentThread().sleep(10000)]]></expression-component>
+        </apache-ignite:lock-scope>
+        <set-payload value="{&quot;res&quot;: &quot;ok&quot;, &quot;msg&quot;:&quot;Lock acquired for 10 seconds&quot;}" doc:name="payload: ok"/>
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-payload value="#[exception.cause.message]" doc:name="payload: err message"/>
+            <json:object-to-json-transformer doc:name="obj2json"/>
+            <set-property propertyName="http.status" value="500" doc:name="http-status: 500"/>
+        </catch-exception-strategy>
+    </flow>
+</mule>
