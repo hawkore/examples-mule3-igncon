@@ -166,7 +166,8 @@ buildNumber.properties
 
 ### Mule ###
 .mule/
+studio_id.xml
 
-### Extra (missing?) ###
+### Other ###
 
 .sonarlint/
