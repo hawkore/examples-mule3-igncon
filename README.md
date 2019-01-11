@@ -9,8 +9,7 @@
 
 # Other resources
 
+Sign up at [www.hawkore.com](https://www.hawkore.com) to access full documentation.
+
 - [Product documentation](https://docs.hawkore.com/private/apache-ignite-connector-mule3/)
 - [Tutorials](https://docs.hawkore.com/private/tutorials/)
-
-
-[www.hawkore.com](https://www.hawkore.com)
