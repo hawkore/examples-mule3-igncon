@@ -1,6 +1,7 @@
 # Mule 3 Examples
 
-[Apache Ignite Connector for Mule 3](https://www.hawkore.com/plugins/product/pl-g-big-data/pl-t-ignite/pl-p-ignitev3) examples
+_[Apache Ignite(TM)](https://ignite.apache.org) is a memory-centric distributed database, caching, and processing platform for
+transactional, analytical, and streaming workloads, delivering in-memory speeds at petabyte scale._
 
 ![connector](assets/connector.png)
 
@@ -24,3 +25,4 @@ documentation.
 
 - [Product documentation](https://docs.hawkore.com/private/apache-ignite-connector-mule3/)
 - [Tutorials](https://docs.hawkore.com/private/tutorials/)
+- [Apache Ignite Connector for Mule 3](https://www.hawkore.com/plugins/product/pl-g-big-data/pl-t-ignite/pl-p-ignitev3) examples
