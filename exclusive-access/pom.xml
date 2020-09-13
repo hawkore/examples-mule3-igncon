@@ -18,8 +18,8 @@
 		<mule.version>3.9.0</mule.version>
 		<mule.tools.version>1.7</mule.tools.version>
 
-		<ignite.version>2.6.0</ignite.version>
-		<apache-ignite-connector.version>2.6.1</apache-ignite-connector.version>
+		<ignite.version>2.8.1</ignite.version>
+		<apache-ignite-connector.version>2.7.0</apache-ignite-connector.version>
 	</properties>
 
 	<build>
